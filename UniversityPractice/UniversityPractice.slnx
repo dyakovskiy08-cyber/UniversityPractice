@@ -1,0 +1,7 @@
+﻿<Solution>
+  <Project Path="UniversityPractice.Android/UniversityPractice.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="UniversityPractice.Desktop/UniversityPractice.Desktop.csproj" />
+  <Project Path="UniversityPractice/UniversityPractice.csproj" />
+</Solution>
