@@ -1,4 +1,6 @@
-﻿<Solution>
+<Solution>
+  <Project Path="../GameClubManager.ConsoleApp/GameClubManager.ConsoleApp.csproj" />
+  <Project Path="../GameClubManager.Data/GameClubManager.Data.csproj" />
   <Project Path="UniversityPractice.Android/UniversityPractice.Android.csproj">
     <Deploy />
   </Project>
