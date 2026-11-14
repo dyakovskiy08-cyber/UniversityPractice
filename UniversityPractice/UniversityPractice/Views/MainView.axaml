@@ -1,18 +1,320 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:UniversityPractice.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="UniversityPractice.Views.MainView"
-             x:DataType="vm:MainViewModel">
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
-    </Design.DataContext>
+             xmlns:models="using:GameClubManager.Data.Models"
+             x:Class="UniversityPractice.Views.MainView">
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+    <Grid Background="#111827" RowDefinitions="Auto,*">
+
+        <Border Background="#1F2937" Padding="24">
+            <StackPanel Spacing="6">
+                <TextBlock Text="GAME CLUB MANAGER"
+                           FontSize="26"
+                           FontWeight="Bold"
+                           Foreground="White"/>
+                <TextBlock Text="Управление игровым клубом"
+                           FontSize="14"
+                           Foreground="#9CA3AF"/>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1"
+                    Margin="20"
+                    Background="#111827"
+                    Foreground="White">
+
+            <!-- ИГРОКИ -->
+            <TabItem Header="Игроки">
+                <Grid Margin="16"
+                      RowDefinitions="Auto,Auto,*,Auto,*">
+
+                    <TextBlock Text="Управление игроками"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,16"/>
+
+                    <Border Grid.Row="1"
+                            Background="#1F2937"
+                            CornerRadius="8"
+                            Padding="16"
+                            Margin="0,0,0,16">
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Данные игрока"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="#A78BFA"/>
+
+                            <TextBlock Text="ФИО" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="FullNameBox"
+                                     PlaceholderText="Введите имя и фамилию"/>
+
+                            <TextBlock Text="Игровой никнейм" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="NicknameBox"
+                                     PlaceholderText="Введите никнейм"/>
+
+                            <TextBlock Text="Уровень членства" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="MembershipLevelBox"
+                                     PlaceholderText="Basic, Premium, VIP"/>
+
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Content="Новый игрок" Click="NewPlayer_Click"/>
+                                <Button Content="Сохранить" Click="SavePlayer_Click"/>
+                                <Button Content="Удалить"
+                                        Click="DeletePlayer_Click"
+                                        Background="#991B1B"
+                                        Foreground="White"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="PlayerStatus"
+                                       Foreground="#A78BFA"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ListBox x:Name="PlayersList"
+                             Grid.Row="2"
+                             SelectionChanged="PlayersList_SelectionChanged"
+                             Background="#1F2937"
+                             BorderBrush="#374151"
+                             Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:Players">
+                                <Border Background="#273449"
+                                        CornerRadius="8"
+                                        Padding="16"
+                                        Margin="6">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="{Binding Nickname}"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"
+                                                   Foreground="#A78BFA"/>
+                                        <TextBlock Text="{Binding FullName}" Foreground="White"/>
+                                        <TextBlock Text="{Binding MembershipLevel}" Foreground="#9CA3AF"/>
+                                        <TextBlock Text="{Binding RegistrationDate}" Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <TextBlock Grid.Row="3"
+                               Text="Игровые сеансы выбранного игрока"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#A78BFA"
+                               Margin="0,12,0,8"/>
+
+                    <ListBox x:Name="PlayerSessionsList"
+                             Grid.Row="4"
+                             Background="#1F2937"
+                             BorderBrush="#374151"
+                             Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:GameSessions">
+                                <Border Background="#273449"
+                                        CornerRadius="8"
+                                        Padding="12"
+                                        Margin="6">
+                                    <StackPanel Spacing="5">
+                                        <TextBlock Text="{Binding Game.Title}"
+                                                   FontSize="16"
+                                                   FontWeight="Bold"
+                                                   Foreground="#A78BFA"/>
+                                        <TextBlock Text="{Binding StartedAt}"
+                                                   Foreground="White"/>
+                                        <TextBlock Text="{Binding DurationMinutes}"
+                                                   Foreground="#D1D5DB"/>
+                                        <TextBlock Text="{Binding Score}"
+                                                   Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
+            <!-- ИГРЫ -->
+            <TabItem Header="Игры">
+                <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+
+                    <TextBlock Text="Управление играми"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,16"/>
+
+                    <Border Grid.Row="1"
+                            Background="#1F2937"
+                            CornerRadius="8"
+                            Padding="16"
+                            Margin="0,0,0,16">
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Данные игры"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="#A78BFA"/>
+
+                            <TextBlock Text="Название" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="GameTitleBox"
+                                     PlaceholderText="Название игры"/>
+
+                            <TextBlock Text="Жанр" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="GameGenreBox"
+                                     PlaceholderText="Например: Action, RPG"/>
+
+                            <TextBlock Text="Разработчик" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="GameDeveloperBox"
+                                     PlaceholderText="Название компании"/>
+
+                            <TextBlock Text="Возрастной рейтинг" Foreground="#D1D5DB"/>
+                            <TextBox x:Name="GameAgeRatingBox"
+                                     PlaceholderText="Например: 12+, 16+, 18+"/>
+
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Content="Новая игра" Click="NewGame_Click"/>
+                                <Button Content="Сохранить" Click="SaveGame_Click"/>
+                                <Button Content="Удалить"
+                                        Click="DeleteGame_Click"
+                                        Background="#991B1B"
+                                        Foreground="White"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="GameStatus"
+                                       Foreground="#A78BFA"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ListBox x:Name="GamesList"
+                             Grid.Row="2"
+                             Background="#1F2937"
+                             BorderBrush="#374151"
+                             Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:Games">
+                                <Border Background="#273449"
+                                        CornerRadius="8"
+                                        Padding="16"
+                                        Margin="6">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="{Binding Title}"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"
+                                                   Foreground="#A78BFA"/>
+                                        <TextBlock Text="{Binding Genre}" Foreground="White"/>
+                                        <TextBlock Text="{Binding Developer}" Foreground="#D1D5DB"/>
+                                        <TextBlock Text="{Binding AgeRating}" Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
+            <!-- ИГРОВЫЕ СЕАНСЫ -->
+            <TabItem Header="Игровые сеансы">
+                <Grid Margin="16" RowDefinitions="Auto,Auto,*">
+
+                    <TextBlock Text="Управление игровыми сеансами"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,16"/>
+
+                    <Border Grid.Row="1"
+                            Background="#1F2937"
+                            CornerRadius="8"
+                            Padding="16"
+                            Margin="0,0,0,16">
+
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="Данные сеанса"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Foreground="#A78BFA"/>
+
+                            <TextBlock Text="Игрок" Foreground="#D1D5DB"/>
+                            <ComboBox x:Name="SessionPlayerCombo"
+                                      PlaceholderText="Выберите игрока">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Players">
+                                        <TextBlock Text="{Binding Nickname}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBlock Text="Игра" Foreground="#D1D5DB"/>
+                            <ComboBox x:Name="SessionGameCombo"
+                                      PlaceholderText="Выберите игру">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Games">
+                                        <TextBlock Text="{Binding Title}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+                            <TextBlock Text="Дата и время (гггг-ММ-дд ЧЧ:мм)"
+                                       Foreground="#D1D5DB"/>
+                            <TextBox x:Name="SessionStartedAtBox"
+                                     PlaceholderText="2026-11-14 15:30"/>
+
+                            <TextBlock Text="Длительность (минуты)"
+                                       Foreground="#D1D5DB"/>
+                            <TextBox x:Name="SessionDurationBox"
+                                     PlaceholderText="60"/>
+
+                            <TextBlock Text="Очки (можно оставить пустым)"
+                                       Foreground="#D1D5DB"/>
+                            <TextBox x:Name="SessionScoreBox"
+                                     PlaceholderText="Например: 1500"/>
+
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <Button Content="Новый сеанс" Click="NewSession_Click"/>
+                                <Button Content="Сохранить" Click="SaveSession_Click"/>
+                                <Button Content="Удалить"
+                                        Click="DeleteSession_Click"
+                                        Background="#991B1B"
+                                        Foreground="White"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="SessionStatus"
+                                       Foreground="#A78BFA"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+
+                    <ListBox x:Name="SessionsList"
+                             Grid.Row="2"
+                             Background="#1F2937"
+                             BorderBrush="#374151"
+                             Foreground="White">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:GameSessions">
+                                <Border Background="#273449"
+                                        CornerRadius="8"
+                                        Padding="16"
+                                        Margin="6">
+                                    <StackPanel Spacing="6">
+                                        <TextBlock Text="{Binding Game.Title}"
+                                                   FontSize="18"
+                                                   FontWeight="Bold"
+                                                   Foreground="#A78BFA"/>
+                                        <TextBlock Text="{Binding Player.Nickname}" Foreground="White"/>
+                                        <TextBlock Text="{Binding StartedAt}" Foreground="#D1D5DB"/>
+                                        <TextBlock Text="{Binding DurationMinutes}" Foreground="#9CA3AF"/>
+                                        <TextBlock Text="{Binding Score}" Foreground="#9CA3AF"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+    </Grid>
 </UserControl>
