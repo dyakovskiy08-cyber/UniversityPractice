@@ -15,7 +15,7 @@ public class GameSessions
 
     public int DurationMinutes { get; set; }
 
-    public int? Score { get; set; }
+    public decimal? Deposit { get; set; }
 
     public Players Player { get; set; } = null!;
 
@@ -24,6 +24,6 @@ public class GameSessions
     public override string ToString()
     {
         return $"{Player?.Nickname} — {Game?.Title}, " +
-               $"{DurationMinutes} мин., очки: {Score?.ToString() ?? "не указаны"}";
+               $"{DurationMinutes} мин., депозит: {Deposit?.ToString("0.##") ?? "не указан"}";
     }
 }
