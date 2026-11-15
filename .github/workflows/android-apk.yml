@@ -5,9 +5,10 @@ on:
   push:
     branches:
       - homework-4-5-gaming
+      - ui-deposit-dark
   pull_request:
     branches:
-      - homework-3-gaming
+      - homework-4-5-gaming
 
 jobs:
   build-android:
