@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - homework-4-5-gaming
+  pull_request:
+    branches:
+      - homework-3-gaming
 
 jobs:
   build-android:
