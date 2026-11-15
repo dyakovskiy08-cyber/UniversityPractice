@@ -6,7 +6,7 @@ using Avalonia.Android;
 namespace UniversityPractice.Android;
 
 [Activity(
-    Label = "UniversityPractice.Android",
+    Label = "Game Club Manager",
     Theme = "@style/MyTheme.NoActionBar",
     Icon = "@drawable/icon",
     MainLauncher = true,
