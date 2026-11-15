@@ -3,6 +3,36 @@
              xmlns:models="using:GameClubManager.Data.Models"
              x:Class="UniversityPractice.Views.MainView">
 
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#1D4ED8"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#3B82F6"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#17263B"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#3B4B63"/>
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="#17263B"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+        </Style>
+        <Style Selector="DatePicker">
+            <Setter Property="Background" Value="#17263B"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+        </Style>
+        <Style Selector="TimePicker">
+            <Setter Property="Background" Value="#17263B"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+        </Style>
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="#111C2E"/>
+            <Setter Property="Foreground" Value="#F8FAFC"/>
+            <Setter Property="BorderBrush" Value="#334155"/>
+        </Style>
+    </UserControl.Styles>
+
     <Grid Background="#0B1220">
         <Grid HorizontalAlignment="Stretch"
               VerticalAlignment="Stretch"
