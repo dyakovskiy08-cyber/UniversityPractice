@@ -43,7 +43,7 @@ erDiagram
         int GameId FK
         DateTime StartedAt
         int DurationMinutes
-        int Score
+        int Deposit
     }
 ```
 
@@ -84,7 +84,7 @@ erDiagram
 | GameId | int | Да | Идентификатор игры |
 | StartedAt | DateTime | Да | Дата и время начала сессии |
 | DurationMinutes | int | Да | Продолжительность игры в минутах |
-| Score | int | Нет | Количество набранных очков |
+| Deposit | int | Нет | Сумма депозита |
 
 ## Связи между таблицами
 
