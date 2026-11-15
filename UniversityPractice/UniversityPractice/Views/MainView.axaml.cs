@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using GameClubManager.Data;
@@ -21,6 +22,7 @@ public partial class MainView : UserControl
         using (var db = new AppDbContext())
         {
             db.Database.EnsureCreated();
+            db.EnsureDepositColumn();
             DbSeed.Seed(db);
         }
 
@@ -112,7 +114,7 @@ public partial class MainView : UserControl
         SessionDatePicker.SelectedDate = new DateTimeOffset(session.StartedAt.Date);
         SessionTimePicker.SelectedTime = session.StartedAt.TimeOfDay;
         SessionDurationBox.Text = session.DurationMinutes.ToString();
-        SessionScoreBox.Text = session.Score?.ToString() ?? "";
+        SessionDepositBox.Text = session.Deposit?.ToString() ?? "";
         SessionStatus.Text = $"Редактирование сеанса №{session.Id}";
     }
 
@@ -326,7 +328,7 @@ public partial class MainView : UserControl
         SessionDatePicker.SelectedDate = DateTimeOffset.Now;
         SessionTimePicker.SelectedTime = DateTime.Now.TimeOfDay;
         SessionDurationBox.Text = "";
-        SessionScoreBox.Text = "";
+        SessionDepositBox.Text = "";
         SessionStatus.Text = "Добавление нового сеанса.";
     }
 
@@ -362,16 +364,17 @@ public partial class MainView : UserControl
             return;
         }
 
-        int? score = null;
-        if (!string.IsNullOrWhiteSpace(SessionScoreBox.Text))
+        decimal? deposit = null;
+        if (!string.IsNullOrWhiteSpace(SessionDepositBox.Text))
         {
-            if (!int.TryParse(SessionScoreBox.Text, out var parsedScore) || parsedScore < 0)
+            if (!decimal.TryParse(SessionDepositBox.Text, NumberStyles.Number,
+                    CultureInfo.CurrentCulture, out var parsedDeposit) || parsedDeposit < 0)
             {
-                SessionStatus.Text = "Очки должны быть целым неотрицательным числом.";
+                SessionStatus.Text = "Введите корректную сумму депозита (не меньше нуля).";
                 return;
             }
 
-            score = parsedScore;
+            deposit = parsedDeposit;
         }
 
         var startedAt = date.Date.Add(time);
@@ -392,7 +395,7 @@ public partial class MainView : UserControl
                 session.GameId = game.Id;
                 session.StartedAt = startedAt;
                 session.DurationMinutes = duration;
-                session.Score = score;
+                session.Deposit = deposit;
             }
             else
             {
@@ -402,7 +405,7 @@ public partial class MainView : UserControl
                     GameId = game.Id,
                     StartedAt = startedAt,
                     DurationMinutes = duration,
-                    Score = score
+                    Deposit = deposit
                 });
             }
 
@@ -415,7 +418,7 @@ public partial class MainView : UserControl
             SessionsList.SelectedItem = null;
             SessionPlayerCombo.SelectedItem = null;
             SessionGameCombo.SelectedItem = null;
-            SessionDurationBox.Text = SessionScoreBox.Text = "";
+            SessionDurationBox.Text = SessionDepositBox.Text = "";
             SessionStatus.Text = "Игровой сеанс сохранён.";
         }
         catch (Exception ex)
