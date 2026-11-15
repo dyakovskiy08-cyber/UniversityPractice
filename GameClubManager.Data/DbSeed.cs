@@ -77,7 +77,7 @@ public static class DbSeed
                 GameId = games[0].Id,
                 StartedAt = new DateTime(2026, 11, 10, 15, 30, 0),
                 DurationMinutes = 120,
-                Score = 950
+                Deposit = 500
             },
             new GameSessions
             {
@@ -85,7 +85,7 @@ public static class DbSeed
                 GameId = games[1].Id,
                 StartedAt = new DateTime(2026, 11, 11, 17, 0, 0),
                 DurationMinutes = 90,
-                Score = 1200
+                Deposit = 750
             },
             new GameSessions
             {
@@ -93,7 +93,7 @@ public static class DbSeed
                 GameId = games[2].Id,
                 StartedAt = new DateTime(2026, 11, 12, 19, 15, 0),
                 DurationMinutes = 150,
-                Score = null
+                Deposit = null
             },
             new GameSessions
             {
@@ -101,7 +101,7 @@ public static class DbSeed
                 GameId = games[1].Id,
                 StartedAt = new DateTime(2026, 11, 13, 12, 0, 0),
                 DurationMinutes = 60,
-                Score = 800
+                Deposit = 300
             }
         };
 
