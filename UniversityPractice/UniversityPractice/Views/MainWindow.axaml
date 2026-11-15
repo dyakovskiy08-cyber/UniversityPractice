@@ -5,7 +5,6 @@
         Title="Game Club Manager"
         Width="1000"
         Height="700"
-        MinWidth="700"
         MinHeight="500">
 
     <views:MainView />

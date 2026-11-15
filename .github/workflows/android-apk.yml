@@ -1,0 +1,40 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - homework-4-5-gaming
+      - ui-deposit-dark
+  pull_request:
+    branches:
+      - homework-4-5-gaming
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install Android workload
+        run: dotnet workload install android
+
+      - name: Restore
+        run: dotnet restore UniversityPractice/UniversityPractice.Android/UniversityPractice.Android.csproj
+
+      - name: Publish APK
+        run: dotnet publish UniversityPractice/UniversityPractice.Android/UniversityPractice.Android.csproj -c Release -f net10.0-android -p:AndroidPackageFormat=apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Game-Club-Manager-Android
+          path: UniversityPractice/UniversityPractice.Android/bin/Release/net10.0-android/**/*.apk
+          if-no-files-found: error
+          retention-days: 14
