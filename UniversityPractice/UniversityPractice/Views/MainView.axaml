@@ -4,10 +4,10 @@
              x:Class="UniversityPractice.Views.MainView">
 
     <Grid Background="#111827">
-        <StackPanel MaxWidth="300"
-                    HorizontalAlignment="Center"
-                    Spacing="8">
-            <Border Background="#1F2937" Padding="12">
+        <Grid MaxWidth="300"
+              HorizontalAlignment="Center"
+              RowDefinitions="Auto,*">
+            <Border Grid.Row="0" Background="#1F2937" Padding="12">
                 <StackPanel Spacing="3">
                     <TextBlock Text="GAME CLUB MANAGER"
                                FontSize="20"
@@ -18,7 +18,7 @@
                 </StackPanel>
             </Border>
 
-            <TabControl>
+            <TabControl Grid.Row="1">
                 <TabItem Header="Игроки">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="8" Spacing="8">
@@ -243,6 +243,6 @@
                     </ScrollViewer>
                 </TabItem>
             </TabControl>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
